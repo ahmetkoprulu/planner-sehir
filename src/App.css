@@ -1,0 +1,97 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.material-gray{
+  background-color: #424242;
+}
+
+.material-black{
+  background: #212121
+}
+
+footer.page-footer{bottom:0;color:#fff}footer.page-footer .container-fluid{width:auto}footer.page-footer .footer-copyright{overflow:hidden;background-color:rgba(0,0,0,.2);color:rgba(255,255,255,.6)}footer.page-footer a{color:#fff}
+
+.text-center{
+  text-align:center!important
+}
+.flex-center{
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-pack:center;
+  -webkit-justify-content:center;
+  -ms-flex-pack:center;
+  justify-content:center;
+  -webkit-box-align:center;
+  -webkit-align-items:center;
+  -ms-flex-align:center;
+  align-items:center;
+  height:100%
+}
+.flex-center p{
+  margin:0
+}
+.flex-center ul{
+  text-align:center
+}
+.flex-center ul li{
+  margin-bottom:1rem
+}
+.flex-center ul li:last-of-type{
+  margin-bottom:0
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.scrollable{
+  overflow-y: scroll;
+  height: 375px;
+}
+
+
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}

@@ -5,6 +5,8 @@ It is an single page application which allows Sehir University students to creat
 - Clientside development knowledge is improved.
 - Javascript knowledge is improved.
 - Libraries mentioned above practiced.
+- Web scrapping knowledge improved.
+- proxy server concept understood.
 
 ## Available Scripts
 

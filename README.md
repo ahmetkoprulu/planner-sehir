@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is Planner Sehir
+It is an single page application which allows Sehir University students to create their own course plan in minutes. The application built in react.js and used some usefull library like jQuery, cheerio, fullcalendar, html2canvas etc.
+## What I Leardned
 
 ## Available Scripts
 

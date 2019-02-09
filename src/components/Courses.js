@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import CourseEvent from './CourseEvent' 
 
 import $ from 'jquery';
-import cheerio from 'cheerio'
 import html2canvas from 'html2canvas'
 
 export default class Courses extends Component {
@@ -11,54 +10,39 @@ export default class Courses extends Component {
         super()
         this.state = {
             events: [],
-            search: ''
+            search: '',
         }
 
-        this.Search = this.Search.bind(this)
         this.updateSearch = this.updateSearch.bind(this)
     }
 
-    Search() {
-        var courseEvents = [];
-        var self = this
-        var createEv = this.createEvent
-        // CORS Proxy Server Connection
-        $.ajaxPrefilter(function (options) {
+    // Send request to courses url and fetches html file than extract table and its rows which contains courses data
+    componentDidMount(){
+        var courseEvents=[]
+        fetch("https://cors-anywhere.herokuapp.com/https://sehir.edu.tr/tr/akademik/insan-ve-toplum-bilimleri-fakultesi/tarih/duyurular/2018-2019-bahar-donemi-ders-programi", {mode: "cors"})
+        .then((response) => response.text())
+        .then((html) => {
+            // Converting fetched html text to DOM object
+            var doc = new DOMParser().parseFromString(html, "text/html")
+            var courses = doc.getElementsByTagName("tr")
 
-            if (options.crossDomain && $.support.cors) {
-                options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-            }
-
-        });
-        // Request for courses table at the url.
-        var url = "https://sehir.edu.tr/tr/akademik/insan-ve-toplum-bilimleri-fakultesi/tarih/duyurular/2018-2019-bahar-donemi-ders-programi";
-        $.get(url, function (response) { // If requuest success returns html file as "response"
-            var mocDoc = cheerio.load(response)
-            var doc = document.createElement('table')
-            doc.innerHTML = mocDoc('table').children('tbody').html()
-            console.log(doc);
-
-            var courses = doc.getElementsByTagName('tr')
             for (var i = 1; i < courses.length; i++) {
-                var row = courses.item(i).getElementsByTagName('td')
-                console.log(row.item(0).innerText, row.item(2).innerText)
-                if (row.item(2).innerText === undefined || row.item(2).innerText === " ") {
-                    continue
-                }
                 try {
                     courseEvents.push(
-                        createEv(row)
+                        this.createEvent(courses.item(i).getElementsByTagName('td'))
                     )
                 } catch{
-                    console.log(row.item(2).innerText + ' Could not added.');
+                    console.log("Error accured while extract course");
                 }
             }
-            self.setState({ events: courseEvents, search: '' })
-        }, 'html')
-
-        console.log(this.courseEvents);
+            this.setState({ events: courseEvents, search: '' })
+        })
+        .catch(function(err) {  
+            console.log('Failed to fetch page: ', err);  
+        });
     }
 
+    // Creating Course object and return it.
     createEvent(row) {
         var temp = []
         var days = row.item(2).innerText.split("\n")
@@ -115,11 +99,10 @@ export default class Courses extends Component {
         $('#calendar').fullCalendar('removeEvents')
     }
 
-    render() {
+    generateComponents(){
         var filteredComps = this.state.events.filter(event => {
             return event[0].id.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || event[0].description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         })
-        console.log(filteredComps);
         var comps = filteredComps.map(event => {
             var color = this.getRandomColor()
             for (var i = 0; i < event.length; i++) {
@@ -127,7 +110,11 @@ export default class Courses extends Component {
             }
             return <CourseEvent key={event[0].title} event={event} />
         })
-        console.log(comps);
+
+        return comps
+    }
+
+    render() {
         return (
             <div className="col-md-4 mb-3">
                 <div className="row" >
@@ -136,7 +123,15 @@ export default class Courses extends Component {
                         <input type="text" class="form-control" value={this.state.search} onChange={this.updateSearch} placeholder="Search"></input>
                     </div>
                     <div className="col-md-12 scrollable" id='external-events'>
-                        {comps}
+                        
+                        {this.state.events.length > 0 ? 
+                            this.generateComponents() : 
+                            (<div class="spinner inner">
+                                <div class="cube1"></div>
+                                <div class="cube2"></div>
+                            </div>)
+                        }
+
                     </div>
                     <div class="btn-group w-100 mt-2" role="group" aria-label="Basic example">
                         <button className="btn btn-outline-dark w-auto" type="button" onClick={this.Search}>Scrap</button>

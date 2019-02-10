@@ -12,7 +12,7 @@ export default class Footer extends Component {
                             <div class=" flex-center">
                                 <div class="col-md-8 col-12 mt-4">
                                     <h3>Introduction</h3>
-                                    <p>In order to load courses data click "Scrap" button. After container on the right filled you may add courses by clicking on them. By clicking the course placed on calender you may remove them. After you create your plan "Done!" button will create image of calendar and download it.</p>
+                                    <p>Courses will load immediately after page is loaded. If you think courses are wrong you can load manually by clicking "Scrap". In order to add courses to calendar click the loaded courses on the right. To remove them from calendar, click them on the calendar. Ater all "Done" button will create an image and download it to your pc.</p>
                                     <br />
                                     <p>Thanks for using. Contact me for any feedback.</p>
                                 </div>

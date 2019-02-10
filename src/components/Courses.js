@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CourseEvent from './CourseEvent' 
+import CustomSearchModal from './CustomSearchModal'
 
 import $ from 'jquery';
 import html2canvas from 'html2canvas'
@@ -11,47 +12,67 @@ export default class Courses extends Component {
         this.state = {
             events: [],
             search: '',
+            scrapOptions:{
+                url: "https://www.sehir.edu.tr/tr/Sayfalar/2018-2019-bahar-donemi-ders-programi.aspx",
+                tableHtml: "",
+                scrapMode: "url"
+            }
         }
 
         this.updateSearch = this.updateSearch.bind(this)
+        this.handleState = this.handleState.bind(this)
+        this.loadCourses = this.loadCourses.bind(this)
+    }
+
+    handleState(child){
+        this.setState({events:[]})
+        this.loadCourses(child.state)
     }
 
     // Send request to courses url and fetches html file than extract table and its rows which contains courses data
     componentDidMount(){
-        var courseEvents=[]
-        fetch("https://cors-anywhere.herokuapp.com/https://sehir.edu.tr/tr/akademik/insan-ve-toplum-bilimleri-fakultesi/tarih/duyurular/2018-2019-bahar-donemi-ders-programi", {mode: "cors"})
-        .then((response) => response.text())
-        .then((html) => {
-            // Converting fetched html text to DOM object
-            var doc = new DOMParser().parseFromString(html, "text/html")
-            var courses = doc.getElementsByTagName("tr")
+        this.loadCourses(this.state.scrapOptions)
+    }
 
-            for (var i = 1; i < courses.length; i++) {
-                try {
-                    courseEvents.push(
-                        this.createEvent(courses.item(i).getElementsByTagName('td'))
-                    )
-                } catch{
-                    console.log("Error accured while extract course");
-                }
+    loadCourses(scrapOptions){
+        if(this.state.scrapOptions.scrapMode === "url"){
+            fetch("https://cors-anywhere.herokuapp.com/" + this.state.scrapOptions.url, { mode: "cors" })
+                .then((response) => response.text())
+                .then((html) => this.extractCourses(html))
+                .catch((err) => console.log('Failed to fetch page: ', err));
+        } else if(this.state.scrapOptions.scrapMode === "tableHtml"){
+            this.extractCourses(this.state.scrapOptions.tableHtml)
+            console.log("yo else if");
+        }
+    }
+
+    extractCourses(html){
+        var courseEvents = []
+        // Converting fetched html text to DOM object
+        var doc = new DOMParser().parseFromString(html, "text/html")
+        var courses = doc.getElementsByTagName("tr")
+        console.log(doc);
+        console.log(courses);
+
+        for (var i = 1; i < courses.length; i++) {
+            try {
+                courseEvents.push(
+                    this.createEvent(courses.item(i).getElementsByTagName('td'))
+                )
+            } catch{
+                console.log("Error accured while extract course");
             }
-            this.setState({ events: courseEvents, search: '' })
-        })
-        .catch(function(err) {  
-            console.log('Failed to fetch page: ', err);  
-        });
+        }
+        this.setState({ events: courseEvents, search: '' })
     }
 
     // Creating Course object and return it.
     createEvent(row) {
-        var temp = []
-        var days = row.item(2).innerText.split("\n")
-        var hours = row.item(3).innerText.split("\n")
+        var temp = []; var days = row.item(2).innerText.split("\n"); var hours = row.item(3).innerText.split("\n")
         var enumDay = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5 }
         for (var i = 0; i < days.length; i++) {
             var tempHours = hours[i].trim().split('-')
-            var start = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[0]
-            var end = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[1]
+            var start = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[0]; var end = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[1]
             temp.push(
                 {
                     id: row.item(0).innerText,
@@ -70,8 +91,7 @@ export default class Courses extends Component {
     }
 
     getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
+        var letters = '0123456789ABCDEF'; var color = '#';
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
@@ -134,11 +154,12 @@ export default class Courses extends Component {
 
                     </div>
                     <div class="btn-group w-100 mt-2" role="group" aria-label="Basic example">
-                        <button className="btn btn-outline-dark w-auto" type="button" onClick={this.Search}>Scrap</button>
+                        <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Scrap</button>
                         <button className="btn btn-outline-success w-50" type="button" onClick={this.takeScreenShot}>Done!</button>
                         <button className="btn btn-outline-danger w-auto" type="button" onClick={this.clearCalendar}>Clear</button>     
                     </div>
                 </div>
+                <CustomSearchModal stateHandler={this.handleState}/>
             </div>)
     }
 }

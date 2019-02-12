@@ -1,5 +1,7 @@
 ## What is Planner Sehir
-It is an single page application which allows Sehir University students to create their own course plan in minutes. The application built in react.js and used some usefull library like jQuery, cheerio, fullcalendar, html2canvas etc.
+It is an single page application which allows Sehir University students to create their own course plan in minutes. The application built in react.js and used some usefull library like jQuery, cheerio, fullcalendar, html2canvas etc. 
+
+Planner Sehir is being hosted at www.ahmetkoprulu.github.io
 ## What I Learned
 - Single page application concept understood.
 - Clientside development knowledge is improved.

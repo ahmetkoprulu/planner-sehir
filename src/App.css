@@ -157,3 +157,13 @@ footer.page-footer{bottom:0;color:#fff}footer.page-footer .container-fluid{width
   top: 15%;
   left: 45%; 
 }
+
+
+.pill-1 a {
+    color: #343a40;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #343a40;
+}

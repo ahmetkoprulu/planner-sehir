@@ -5,6 +5,7 @@ import CustomSearchModal from './CustomSearchModal'
 
 import $ from 'jquery';
 import html2canvas from 'html2canvas'
+import settings from '../settings.json'
 
 export default class Courses extends Component {
     constructor() {
@@ -13,7 +14,7 @@ export default class Courses extends Component {
             events: [],
             search: '',
             scrapOptions:{
-                url: "https://www.sehir.edu.tr/tr/Sayfalar/2018-2019-bahar-donemi-ders-programi.aspx",
+                url: settings.default_url,
                 tableHtml: "",
                 scrapMode: "url"
             }

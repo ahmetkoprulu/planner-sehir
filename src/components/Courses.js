@@ -137,7 +137,7 @@ export default class Courses extends Component {
     render() {
         return (
             <div className="col-md-4 mb-3">
-                <div className="row" >
+                <div className="row">
                     <div id="search" class="form-group has-search w-100">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" value={this.state.search} onChange={this.updateSearch} placeholder="Search"></input>

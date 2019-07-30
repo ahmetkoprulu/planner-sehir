@@ -31,7 +31,7 @@ export default class Calendar extends Component {
                 defaultDate: '2016-01-11',
                 slotLabelFormat: 'H:mm',
                 minTime: '09:00:00',
-                maxTime: '18:00:00',
+                maxTime: '23:00:00',
                 slotDuration: '00:30:00',
                 columnHeader: true,
                 columnHeaderFormat: 'ddd',

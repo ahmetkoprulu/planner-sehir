@@ -6,7 +6,6 @@ import $ from 'jquery';
 import cheerio from 'cheerio'
 import html2canvas from 'html2canvas'
 
-/*
 Search() {
     var courseEvents = [];
     var self = this
@@ -71,4 +70,4 @@ createEvent(row) {
     }
 
     return temp
-} */
+} 

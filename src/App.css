@@ -76,7 +76,7 @@ footer.page-footer{bottom:0;color:#fff}footer.page-footer .container-fluid{width
 /* Courses Container Css*/
 .scrollable{
   overflow-y: scroll;
-  height: 375px;
+  height: 600px;
   text-align: center;
   justify-content: center;
   align-content: center;

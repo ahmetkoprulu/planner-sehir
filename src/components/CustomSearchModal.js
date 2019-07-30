@@ -22,7 +22,6 @@ export default class CustomSearchModal extends React.Component {
             this.setState({ [name]: event.target.getAttribute('data-value'), url: "" })
 
         console.log(this.state.scrapMode, this.state.url, this.state.tableHtml);
-        
     }
 
     handleChange(event){

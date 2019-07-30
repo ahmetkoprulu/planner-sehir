@@ -150,6 +150,7 @@ export default class Courses extends Component {
                             (<div class="spinner inner">
                                 <div class="cube1"></div>
                                 <div class="cube2"></div>
+                                <div className="inner-text">Loading...</div>
                             </div>)
                         }
 

@@ -158,6 +158,9 @@ footer.page-footer{bottom:0;color:#fff}footer.page-footer .container-fluid{width
   left: 45%; 
 }
 
+.inner-text {
+  padding-top: 60px;
+}
 
 .pill-1 a {
     color: #343a40;

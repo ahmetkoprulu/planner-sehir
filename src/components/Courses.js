@@ -5,6 +5,7 @@ import CustomSearchModal from './CustomSearchModal'
 
 import $ from 'jquery';
 import html2canvas from 'html2canvas'
+
 import settings from '../settings.json'
 
 export default class Courses extends Component {
@@ -25,9 +26,9 @@ export default class Courses extends Component {
         this.loadCourses = this.loadCourses.bind(this)
     }
 
-    handleState(child){
-        this.setState({events:[]})
-        this.loadCourses(child.state)
+    handleState(childState){
+        this.setState({events:[], scrapOptions: childState})
+        this.loadCourses(childState)
     }
 
     // Send request to courses url and fetches html file than extract table and its rows which contains courses data
@@ -36,13 +37,13 @@ export default class Courses extends Component {
     }
 
     loadCourses(scrapOptions){
-        if(this.state.scrapOptions.scrapMode === "url"){
-            fetch("https://cors-anywhere.herokuapp.com/" + this.state.scrapOptions.url, { mode: "cors" })
+        if(scrapOptions.scrapMode === "url"){
+            fetch("https://cors-anywhere.herokuapp.com/" + scrapOptions.url, { mode: "cors" })
                 .then((response) => response.text())
                 .then((html) => this.extractCourses(html))
                 .catch((err) => console.log('Failed to fetch page: ', err));
-        } else if(this.state.scrapOptions.scrapMode === "tableHtml"){
-            this.extractCourses(this.state.scrapOptions.tableHtml)
+        } else if(scrapOptions.scrapMode === "tableHtml"){
+            this.extractCourses(scrapOptions.tableHtml)
             console.log("yo else if");
         }
     }

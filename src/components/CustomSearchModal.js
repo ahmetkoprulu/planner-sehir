@@ -22,6 +22,7 @@ export default class CustomSearchModal extends React.Component {
             this.setState({ [name]: event.target.getAttribute('data-value'), url: "" })
 
         console.log(this.state.scrapMode, this.state.url, this.state.tableHtml);
+        
     }
 
     handleChange(event){
@@ -32,7 +33,7 @@ export default class CustomSearchModal extends React.Component {
     }
 
     saveChanges(){
-        this.props.stateHandler(this)
+        this.props.stateHandler(this.state)
     }
 
     render(){
@@ -70,7 +71,7 @@ export default class CustomSearchModal extends React.Component {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-dark" onClick={this.saveChanges}>Save changes</button>
+                            <button type="button" class="btn btn-dark" onClick={this.saveChanges} data-dismiss="modal">Save changes</button>
                         </div>
                     </div>
                 </div>

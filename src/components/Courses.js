@@ -140,6 +140,11 @@ export default class Courses extends Component {
         return (
             <div className="col-md-4 mb-3">
                 <div className="row">
+                    <div class="btn-group w-100 mb-2" role="group" aria-label="Basic example">
+                        <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Load Syllabus</button>
+                        <button className="btn btn-outline-success w-50" type="button" onClick={this.takeScreenShot}>Done!</button>
+                        <button className="btn btn-outline-danger w-auto" type="button" onClick={this.clearCalendar}>Clear</button>     
+                    </div>
                     <div id="search" class="form-group has-search w-100">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" value={this.state.search} onChange={this.updateSearch} placeholder="Search"></input>
@@ -155,11 +160,6 @@ export default class Courses extends Component {
                             </div>)
                         }
 
-                    </div>
-                    <div class="btn-group w-100 mt-2" role="group" aria-label="Basic example">
-                        <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Scrap</button>
-                        <button className="btn btn-outline-success w-50" type="button" onClick={this.takeScreenShot}>Done!</button>
-                        <button className="btn btn-outline-danger w-auto" type="button" onClick={this.clearCalendar}>Clear</button>     
                     </div>
                 </div>
                 <CustomSearchModal stateHandler={this.handleState}/>

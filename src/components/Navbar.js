@@ -5,7 +5,8 @@ export default class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark material-black justify-content-between">
                 <div className="container">
-                    <a className="navbar-brand nav-link" href="/">Planner Sehir</a>
+                    <a className="navbar-brand nav-link" href="/">Planner Sehir (2019-2020)</a>
+
                     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                         <li class="nav-item">
                             <a className="text-light" href="https://github.com/ahmetkoprulu/">

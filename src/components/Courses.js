@@ -160,7 +160,7 @@ export default class Courses extends Component {
 
     render() {
         return (
-            <div className="col-md-4 mb-3">
+            <div className="col-md-4 mb-3 pr-4 courses">
                 <div className="row">
                     <div class="btn-group w-100 mb-2" role="group" aria-label="Basic example">
                         <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Load Syllabus</button>

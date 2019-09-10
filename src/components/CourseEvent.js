@@ -12,12 +12,22 @@ export default class CourseEvent extends Component {
     render() {
         var times = this.event.map(event => event.presentation)
         return (
-            <div className='fc-event mb-2 bg-dark'>
-                {this.event[0].id + ' | ' + this.event[0].description}
-                <br />
-                {this.event[0].teacher + ' | ' + this.event[0].room}
-                <br />
-                {times}
+            <div class='course-event'>
+                <div class='title'>{this.event[0].id + '-' + this.event[0].description}</div>
+                <div class='info'>
+                    <div>
+                        <div>{this.event[0].teacher}</div>
+                        <span>{this.event[0].room}</span>
+                    </div>
+                    <div>
+                        {
+                            times.map(time => <div>{time}</div>)
+                        }
+                        
+                    </div>
+                    <span></span>
+                    
+                </div>
             </div>)
     }
 

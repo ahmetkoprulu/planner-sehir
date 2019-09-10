@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <div className="container">
+        <div className="container-fluid">
           <div className="row mt-3">
             <Calendar />
             <Courses />

@@ -35,8 +35,12 @@ export default class CourseEvent extends Component {
         // Adding on click event that will place event to the calendar
         var element = ReactDOM.findDOMNode(this)
         element.addEventListener('click', () => { // Iterating all child events in the event
-            for (var i = 0; i < this.event.length; i++) {
-                $('#calendar').fullCalendar('renderEvent', this.props.event[i])
+            var allEvents = $('#calendar').fullCalendar('clientEvents');
+            var el = allEvents.find(el => el.id === this.event[0].id)
+            if(!el){
+                for (var i = 0; i < this.event.length; i++) {
+                    $('#calendar').fullCalendar('renderEvent', this.props.event[i])
+                }
             }
         })
     }

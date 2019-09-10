@@ -38,13 +38,12 @@ export default class Courses extends Component {
 
     loadCourses(scrapOptions){
         if(scrapOptions.scrapMode === "url"){
-            fetch("https://cors-anywhere.herokuapp.com/" + scrapOptions.url, { mode: "cors" })
+            fetch("https://source-extractor.herokuapp.com/redirect?url=" + scrapOptions.url, { mode: "cors" })
                 .then((response) => response.text())
                 .then((html) => this.extractCourses(html))
                 .catch((err) => console.log('Failed to fetch page: ', err));
         } else if(scrapOptions.scrapMode === "tableHtml"){
             this.extractCourses(scrapOptions.tableHtml)
-            console.log("yo else if");
         }
     }
 
@@ -60,9 +59,10 @@ export default class Courses extends Component {
             try {
                 courseEvents.push(
                     this.createEvent(courses.item(i).getElementsByTagName('td'))
+                    
                 )
-            } catch{
-                console.log("Error accured while extract course");
+            } catch(err){
+                console.log(err.message);
             }
         }
         this.setState({ events: courseEvents, search: '' })
@@ -72,22 +72,44 @@ export default class Courses extends Component {
     createEvent(row) {
         var temp = []; var days = row.item(2).innerText.split("\n"); var hours = row.item(3).innerText.split("\n")
         var enumDay = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5 }
-        for (var i = 0; i < days.length; i++) {
-            var tempHours = hours[i].trim().split('-')
-            var start = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[0]; var end = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[1]
-            temp.push(
-                {
-                    id: row.item(0).innerText,
-                    title: row.item(0).innerText + '\n ' + row.item(4).innerText,
-                    description: row.item(1).innerText,
-                    teacher: row.item(5).innerText,
-                    room: row.item(4).innerText,
-                    start: start,
-                    end: end,
-                    presentation: days[i] + " " + hours[i]
-                }
-            )
+        if(days.length > hours.length){
+            for (var i = 0; i < days.length; i++) {
+                var tempHours = hours[0].trim().split('-')
+                var start = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[0]; var end = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[1]
+                temp.push(
+                    {
+                        id: row.item(0).innerText,
+                        title: row.item(0).innerText + '\n ' + row.item(4).innerText,
+                        description: row.item(1).innerText,
+                        teacher: row.item(5).innerText,
+                        room: row.item(4).innerText,
+                        start: start,
+                        end: end,
+                        presentation: days[i] + " " + hours[0]
+                    }
+                )
+            }
         }
+        else {
+            for (var i = 0; i < days.length; i++) {
+                var tempHours = hours[i].trim().split('-')
+                var start = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[0]; var end = '2016-01-1' + enumDay[days[i].trim()] + 'T' + tempHours[1]
+                temp.push(
+                    {
+                        id: row.item(0).innerText,
+                        title: row.item(0).innerText + '\n ' + row.item(4).innerText,
+                        description: row.item(1).innerText,
+                        teacher: row.item(5).innerText,
+                        room: row.item(4).innerText,
+                        start: start,
+                        end: end,
+                        presentation: days[i] + " " + hours[i]
+                    }
+                )
+            }
+        }
+
+        
 
         return temp
     }

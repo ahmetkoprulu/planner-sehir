@@ -11,7 +11,6 @@ export default class CourseEvent extends Component {
 
     render() {
         var times = this.event.map(event => event.presentation)
-        console.log(times);
         return (
             <div className='fc-event mb-2 bg-dark'>
                 {this.event[0].id + ' | ' + this.event[0].description}

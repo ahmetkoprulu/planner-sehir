@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CourseEvent from './CourseEvent' 
 import CustomSearchModal from './CustomSearchModal'
+import FilterModal from './FilterModal'
 
 import $ from 'jquery';
 import html2canvas from 'html2canvas'
@@ -18,6 +19,9 @@ export default class Courses extends Component {
                 url: settings.default_url,
                 tableHtml: "",
                 scrapMode: "url"
+            },
+            filterOptions: {
+                events: []
             }
         }
 
@@ -33,7 +37,7 @@ export default class Courses extends Component {
 
     // Send request to courses url and fetches html file than extract table and its rows which contains courses data
     componentDidMount(){
-        this.loadCourses(this.state.scrapOptions)
+        //this.loadCourses(this.state.scrapOptions)
     }
 
     loadCourses(scrapOptions){
@@ -163,9 +167,10 @@ export default class Courses extends Component {
             <div className="col-md-4 mb-3 pr-4 courses">
                 <div className="row">
                     <div class="btn-group w-100 mb-2" role="group" aria-label="Basic example">
-                        <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Load Syllabus</button>
-                        <button className="btn btn-outline-success w-50" type="button" onClick={this.takeScreenShot}>Done!</button>
-                        <button className="btn btn-outline-danger w-auto" type="button" onClick={this.clearCalendar}>Clear</button>     
+                    <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#exampleModalCenter">Load Syllabus</button>
+                    <button className="btn btn-outline-dark w-auto" type="button" data-toggle="modal" data-target="#filterModal">Time Filter</button>
+                    <button className="btn btn-success" type="button" onClick={this.takeScreenShot}>Done!</button>
+                    <button className="btn btn-danger w-auto" type="button" onClick={this.clearCalendar}>Clear</button>     
                     </div>
                     <div id="search" class="form-group has-search w-100">
                         <span class="fa fa-search form-control-feedback"></span>
@@ -184,7 +189,8 @@ export default class Courses extends Component {
 
                     </div>
                 </div>
-                <CustomSearchModal stateHandler={this.handleState}/>
+                <CustomSearchModal stateHandler={this.handleState} />
+                <FilterModal stateHandler={this.state} />
             </div>)
     }
 }

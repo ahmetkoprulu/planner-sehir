@@ -4,9 +4,9 @@ export default class CustomSearchModal extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-                url: "",
-                tableHtml: "",
-                scrapMode: "url"
+            url: "",
+            tableHtml: "",
+            scrapMode: "url"
         }
 
         this.handleChange = this.handleChange.bind(this)
